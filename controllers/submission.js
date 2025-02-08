@@ -81,6 +81,16 @@ export const submit = async (req, res) => {
         },
       });
 
+    await prisma.user.update({
+        where: {
+          email: email,
+        },
+        data: {
+          problemsSolved: {
+            increment: 1,
+          },
+        },});
+
     return res.status(200).json({ status: "Accepted", message: "" });
   } catch (err) {
     console.log(err);

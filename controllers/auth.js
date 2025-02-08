@@ -19,7 +19,7 @@ export const login=async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, problemsSolved: user.problemsSolved },
       process.env.SECRET_KEY,
       { expiresIn: "1h" }
     );
@@ -60,21 +60,35 @@ export const addUser = async (req, res) => {
   }
 };
 
-export const verifyToken = (req, res, next) => {
-  const token = req.headers["authorization"];
+export const verifyToken = async (req, res, next) => {
+  try {
+    const token = req.headers["authorization"];
 
-  if (!token) {
-    return res.status(403).json({ message: "No token provided" });
-  }
-
-  jwt.verify(token.split(" ")[1], process.env.SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid token" });
+    if (!token) {
+      return res.status(403).json({ message: "No token provided" });
     }
 
+    const decoded = await new Promise((resolve, reject) => {
+      jwt.verify(token.split(" ")[1], process.env.SECRET_KEY, (err, decoded) => {
+        if (err) reject(err);
+        else resolve(decoded);
+      });
+    });
+
+    const user = await prisma.user.findUnique({
+      where: { email: decoded.email },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    decoded.problemsSolved = user.problemsSolved;
     req.user = decoded;
     next();
-  });
+  } catch (error) {
+    return res.status(401).json({ message: "Invalid token", error: error.message });
+  }
 };
 
 export const getLogs=async(req,res)=>{
