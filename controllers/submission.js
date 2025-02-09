@@ -29,9 +29,9 @@ const question = {
     expectedOutput: ["18\n", "2\n", "25\n", "45\n"]
   },
   6:{
-    publicStdIn: ["2", "5", "10", "17"],
-    stdin: ["1", "3", "15", "23", "97"],
-    expectedOutput: ["0\n", "1\n", "0\n", "1\n", "1\n"]
+    publicStdIn: ["7", "10"],
+    stdin: ["2", "3", "15", "23", "97"],
+    expectedOutput: ["1\n", "1\n", "0\n", "1\n", "1\n"]
   }
 };
 
