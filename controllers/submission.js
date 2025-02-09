@@ -18,6 +18,21 @@ const question = {
     stdin: ["6\n 1 2 3 4 5 6", "4\n 0 2 4 6", "10\n 1 1 1 1 1 1 1 1 1 1"],
     expectedOutput: ["3\n", "4\n", "0\n"],
   },
+  4:{
+    publicStdIn: ["hello", "openai"],
+    stdin: ["communication", "rhythm", "aeiou", "beautiful", "sky"],
+    expectedOutput: ["6\n", "0\n", "5\n", "5\n", "0\n"]
+  },
+  5:{
+    publicStdIn: ["123", "987"],
+    stdin: ["99", "1001", "76543", "99999"],
+    expectedOutput: ["18\n", "2\n", "25\n", "45\n"]
+  },
+  6:{
+    publicStdIn: ["2", "5", "10", "17"],
+    stdin: ["1", "3", "15", "23", "97"],
+    expectedOutput: ["0\n", "1\n", "0\n", "1\n", "1\n"]
+  }
 };
 
 export const run = async (req, res) => {

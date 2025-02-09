@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyToken,login,addUser, getLogs } from "../controllers/auth.js";
+import { verifyToken,login,addUser, getLogs, getUsers } from "../controllers/auth.js";
 
 const router = express.Router();
 
@@ -9,5 +9,6 @@ router.get("/protected", verifyToken, (req, res) => {
 router.post("/adduser",addUser);
 router.post("/login",login);
 router.get("/logs",getLogs);
+router.get("/users",getUsers)
 
 export default router;
